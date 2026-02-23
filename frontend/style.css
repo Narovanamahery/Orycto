@@ -1,1 +1,219 @@
-/*# sourceMappingURL=style.css.map */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #1C2A25;
+  height: 60px;
+  border-bottom: 1px solid #1e2e28;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .left-side {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.header .left-side .menu-icon {
+  width: 24px;
+  opacity: 0.7;
+}
+.header .left-side .search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.header .left-side .search-box .searchbox {
+  width: 260px;
+  height: 36px;
+  background: #121B18;
+  border: 1px solid #2A6353;
+  border-radius: 8px;
+  padding: 0 40px 0 14px;
+  color: #E0E6E4;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+.header .left-side .search-box .searchbox::-moz-placeholder {
+  color: #A0A8A5;
+  font-size: 13px;
+}
+.header .left-side .search-box .searchbox::placeholder {
+  color: #A0A8A5;
+  font-size: 13px;
+}
+.header .left-side .search-box .searchbox:focus {
+  border-color: #D4B475;
+  width: 300px;
+}
+.header .left-side .search-box .searchico {
+  position: absolute;
+  right: 8px;
+  width: 18px;
+  opacity: 0.5;
+  cursor: pointer;
+  pointer-events: none;
+}
+.header .left-side .orycto-logo {
+  width: 38px;
+  border-radius: 8px;
+}
+.header .right-side {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.header .right-side .notif-box {
+  position: relative;
+  cursor: pointer;
+}
+.header .right-side .notif-box img {
+  width: 22px;
+  opacity: 0.8;
+}
+.header .right-side .notif-box .notif {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background: #D4B475;
+  color: #1C2A25;
+  font-size: 9px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid #1C2A25;
+}
+.header .right-side .user-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border: 1px solid #2A6353;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.header .right-side .user-box img {
+  width: 22px;
+}
+.header .right-side .user-box .user-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #A0A8A5;
+}
+.header .right-side .user-box:hover {
+  border-color: #D4B475;
+  background: rgba(212, 180, 117, 0.06);
+}
+
+.menu-side {
+  width: 190px;
+  flex-shrink: 0;
+  background: #1C2A25;
+  border-radius: 14px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: sticky;
+  top: 70px;
+}
+.menu-side .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #A0A8A5;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.menu-side .menu-item img {
+  width: 18px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.menu-side .menu-item h3 {
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+}
+.menu-side .menu-item:hover {
+  background: rgba(42, 99, 83, 0.3);
+  color: #E0E6E4;
+}
+.menu-side .menu-item:hover img {
+  opacity: 1;
+}
+.menu-side .menu-item.active {
+  background: #2A6353;
+  color: #E0E6E4;
+}
+.menu-side .menu-item.active img {
+  opacity: 1;
+}
+.menu-side .menu-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 20px;
+  background: #1e2e28;
+  color: #A0A8A5;
+  margin-left: auto;
+}
+.menu-side .menu-badge.alert {
+  background: rgba(231, 76, 60, 0.2);
+  color: #f08080;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #121B18;
+  color: #E0E6E4;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  width: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+img:hover {
+  transform: scale(1.08);
+}
+
+.container {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  min-height: calc(100vh - 60px);
+}
+.container .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}/*# sourceMappingURL=style.css.map */
