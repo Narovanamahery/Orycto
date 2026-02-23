@@ -1,5 +1,6 @@
 import { createHeader } from "./components/header.js";
 import { createSidebar } from "./components/sidebar.js";
+import { dashboardHTML } from "./pages/dashboard.js";
 
 const App = document.querySelector('.app');
 App.appendChild(createHeader());
@@ -14,5 +15,7 @@ container.appendChild(createSidebar());
 container.appendChild(contentArea);
 
 App.appendChild(container);
+
+contentArea.innerHTML = dashboardHTML();
 
 export { contentArea };

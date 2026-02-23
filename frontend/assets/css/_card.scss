@@ -1,0 +1,113 @@
+.middle-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: $r-lg;
+  padding: 16px;
+  transition: border-color .2s;
+
+  &:hover { border-color: $border-lt; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    color: $text;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid $border;
+  }
+
+  .card-link {
+    font-size: 11px;
+    color: $gold;
+    opacity: .8;
+    transition: opacity .15s;
+    &:hover { opacity: 1; }
+  }
+
+  .card-sub-header {
+    font-size: 11px;
+    font-weight: 600;
+    color: $muted;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 14px 0 8px;
+    padding-top: 10px;
+    border-top: 1px solid $border;
+  }
+}
+
+.bottom-row {
+  background: $surface;
+  border-radius: $r-lg;
+  border: 1px solid $border;
+  overflow: hidden;
+
+  .bottom-row-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid $border;
+  }
+
+  .card-head {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text;
+  }
+}
+
+.livestock-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  &.full { width: 100%; }
+
+  thead tr {
+    background: rgba($bg, .5);
+  }
+
+  thead th {
+    padding: 10px 14px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: $muted;
+    text-align: left;
+    border-bottom: 1px solid $border;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid $border;
+    transition: background .12s;
+    cursor: pointer;
+
+    &:hover { background: rgba($green, .1); }
+    &:last-child { border-bottom: none; }
+  }
+
+  tbody td {
+    padding: 12px 14px;
+    font-size: 13px;
+    color: $text;
+    vertical-align: middle;
+  }
+
+  .td-id {
+    font-family: monospace;
+    font-size: 11px;
+    color: $gold;
+    letter-spacing: .5px;
+  }
+}

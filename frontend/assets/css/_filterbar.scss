@@ -1,0 +1,32 @@
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid $border-lt;
+  background: transparent;
+  color: $muted;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .15s;
+
+  &:hover { border-color: $text; color: $text; }
+
+  &.active {
+    background: $green;
+    border-color: $green;
+    color: $text;
+  }
+}

@@ -1,0 +1,75 @@
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid $border;
+
+  &:last-child { border-bottom: none; }
+
+  .alert-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    margin-top: 5px;
+    flex-shrink: 0;
+
+    &.green { background: $green-lt; }
+    &.gold  { background: $gold; }
+    &.red   { background: $red; }
+    &.blue  { background: $blue-lt; }
+
+    &.pulse {
+      box-shadow: 0 0 0 0 rgba($red, .6);
+      animation: pulse 1.5s infinite;
+    }
+  }
+
+  .alert-info { flex: 1; }
+  .alert-title { font-size: 12.5px; font-weight: 600; color: $text; }
+  .alert-desc  { font-size: 11px; color: $muted; margin-top: 2px; }
+  .alert-time  { font-size: 10px; color: $muted; font-style: italic; white-space: nowrap; margin-top: 2px; }
+}
+
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba($red, .5); }
+  70%  { box-shadow: 0 0 0 6px rgba($red, 0); }
+  100% { box-shadow: 0 0 0 0 rgba($red, 0); }
+}
+
+.alert-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: .5px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 3px;
+
+  &.urgent { background: rgba($red, .25); color: #f08080; }
+  &.warn   { background: rgba($gold, .2); color: $gold; }
+}
+
+.alert-box {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: $r;
+  font-size: 13px;
+  line-height: 1.5;
+
+  &.danger {
+    background: rgba($red, .12);
+    border: 1px solid rgba($red, .3);
+    color: #f0c0c0;
+
+    strong { color: #f08080; }
+  }
+
+  &.warn {
+    background: rgba($gold, .1);
+    border: 1px solid rgba($gold, .3);
+    color: #e8d090;
+  }
+}
