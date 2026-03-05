@@ -1,0 +1,137 @@
+.qa-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 14px;
+  background: #1C2A25;
+  border: 1px solid #2A6353;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  color: #A0A8A5;
+  transition: all 0.2s;
+  flex: 1;
+  min-width: 80px;
+}
+.qa-btn .qa-icon {
+  font-size: 20px;
+}
+.qa-btn:hover {
+  background: rgba(42, 99, 83, 0.2);
+  border-color: #3a8a72;
+  color: #E0E6E4;
+  transform: translateY(-2px);
+}
+.qa-btn:active {
+  transform: scale(0.97);
+}
+
+.action-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid #2A6353;
+  background: #121B18;
+  color: #A0A8A5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: all 0.12s;
+  opacity: 0;
+}
+tr:hover .action-btn {
+  opacity: 1;
+}
+.action-btn:hover {
+  border-color: #E0E6E4;
+  color: #E0E6E4;
+  background: #1C2A25;
+}
+.action-btn.danger:hover {
+  border-color: #E74C3C;
+  color: #f08080;
+  background: rgba(231, 76, 60, 0.1);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: #D4B475;
+  color: #121B18;
+  border: none;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary:hover {
+  background: rgb(221.6928176796, 196.9060773481, 148.1071823204);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: scale(0.97);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: transparent;
+  color: #A0A8A5;
+  border: 1px solid #2A6353;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-ghost:hover {
+  border-color: #E0E6E4;
+  color: #E0E6E4;
+  background: rgba(224, 230, 228, 0.05);
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  background: #E74C3C;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-danger:hover {
+  background: #c0392b;
+  transform: translateY(-1px);
+}
+
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: #D4B475;
+  color: #121B18;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.view-btn:hover {
+  opacity: 0.85;
+}

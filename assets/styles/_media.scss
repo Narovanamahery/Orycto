@@ -1,0 +1,148 @@
+@media (max-width: 1100px) {
+  .middle-row { grid-template-columns: 1fr 1fr; }
+  .stats-row  { grid-template-columns: repeat(2, 1fr); }
+  .stats-row.mini { grid-template-columns: repeat(3, 1fr); }
+
+  .menu-side { width: 160px; }
+
+  .header .left-side .search-box .searchbox { width: 200px; }
+  .header .left-side .search-box .searchbox:focus { width: 240px; }
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    padding: 8px;
+    gap: 8px;
+    padding-bottom: 70px;
+  }
+
+  .menu-side {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    border-radius: 0;
+    padding: 0 4px;
+    z-index: 150;
+    border-top: 1px solid #2A6353;
+    justify-content: space-around;
+    align-items: center;
+    top: auto;
+  }
+
+  .menu-side .menu-item {
+    flex-direction: column;
+    gap: 3px;
+    padding: 6px 10px;
+    font-size: 10px;
+    flex: 1;
+    justify-content: center;
+    border-radius: 6px;
+  }
+
+  .menu-side .menu-item h3 {
+    font-size: 9px;
+    text-align: center;
+    flex: none;
+  }
+
+  .menu-side .menu-item img { width: 20px; }
+  .menu-side .menu-badge { display: none; }
+
+  .header { padding: 0 12px; }
+  .header .left-side .search-box .searchbox { width: 160px; font-size: 12px; }
+  .header .left-side .search-box .searchbox:focus { width: 200px; }
+  .header .right-side .user-box .user-name { display: none; }
+
+  .container .content { gap: 12px; }
+
+  .middle-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stats-row  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .stats-row.mini { grid-template-columns: repeat(3, 1fr); }
+
+  .bottom-row { overflow-x: auto; }
+  .livestock-table { min-width: 600px; }
+}
+
+@media (max-width: 768px) {
+  .header .left-side .orycto-logo { display: none; }
+  .header .left-side .search-box .searchbox { width: 140px; font-size: 12px; }
+
+  .middle-row { grid-template-columns: 1fr !important; gap: 10px; }
+
+  .stats-row  { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .stats-row.mini { grid-template-columns: repeat(2, 1fr); }
+
+  .stat-card .stat-value { font-size: 22px; }
+  .stat-card .stat-icon  { font-size: 18px; }
+
+  .quick-actions-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .qa-btn { padding: 10px 8px; font-size: 10px; min-width: unset; }
+  .qa-btn .qa-icon { font-size: 16px; }
+
+  .container .content .page-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .container .content .page-header .page-title { font-size: 17px; }
+  .container .content .alert-banner { padding: 10px 12px; gap: 10px; }
+  .container .content .alert-banner .alert-banner-text { font-size: 12px; }
+
+  .card { padding: 12px; }
+  .card .card-header { flex-wrap: wrap; gap: 6px; }
+
+  .filter-pills { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }
+
+  .form-row { grid-template-columns: 1fr; }
+
+  .modal { max-width: 100%; margin: 0 4px; border-radius: 14px; }
+  .modal-overlay { padding: 12px 8px; align-items: flex-end; }
+  .modal-body { padding: 14px 16px; }
+  .modal-footer { padding: 12px 16px; }
+
+  .bottom-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .livestock-table { min-width: 560px; }
+
+  .toast-container { bottom: 72px; right: 12px; left: 12px; align-items: stretch; }
+  .toast { min-width: unset; }
+}
+
+@media (max-width: 480px) {
+  .header { padding: 0 8px; height: 54px; }
+  .header .left-side { gap: 10px; }
+  .header .left-side .search-box .searchbox { width: 110px; font-size: 11px; }
+  .header .left-side .search-box .searchbox:focus { width: 150px; }
+
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .stat-card { padding: 12px 10px; }
+  .stat-card .stat-value { font-size: 20px; }
+  .stat-card .stat-label { font-size: 11px; }
+  .stat-card .stat-sub   { font-size: 10px; }
+
+  .quick-actions-row { grid-template-columns: repeat(2, 1fr); }
+
+  .container .content .page-header .page-title { font-size: 15px; }
+
+  .btn-primary, .btn-ghost, .btn-danger { padding: 8px 12px; font-size: 12px; }
+  .pill { padding: 5px 10px; font-size: 11px; }
+
+  .bottom-row .bottom-row-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .menu-side .menu-item h3 { display: none; }
+  .menu-side .menu-item { padding: 8px 6px; }
+  .menu-side { justify-content: space-evenly; }
+
+  .container { padding: 6px; padding-bottom: 62px; }
+  .container .content { gap: 10px; }
+}

@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  min-height: calc(100vh - 60px);
+}
+.container .content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+}
+.container .content .page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.container .content .page-header .page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #E0E6E4;
+  line-height: 1.2;
+}
+.container .content .page-header .page-sub {
+  font-size: 12px;
+  color: #A0A8A5;
+  margin-top: 2px;
+}
+.container .content .alert-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  background: linear-gradient(90deg, rgba(231, 76, 60, 0.15) 0%, rgba(231, 76, 60, 0.05) 100%);
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.container .content .alert-banner:hover {
+  border-color: rgba(231, 76, 60, 0.7);
+}
+.container .content .alert-banner .alert-banner-icon {
+  font-size: 20px;
+}
+.container .content .alert-banner .alert-banner-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+}
+.container .content .alert-banner .alert-banner-text strong {
+  color: #f08080;
+}
+.container .content .alert-banner .alert-banner-text span {
+  color: #c09090;
+  font-size: 12px;
+}
+.container .content .alert-banner .alert-banner-arrow {
+  color: #f08080;
+  font-size: 18px;
+}

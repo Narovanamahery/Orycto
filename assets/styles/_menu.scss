@@ -1,0 +1,63 @@
+.menu-side {
+  width: 190px;
+  flex-shrink: 0;
+  background: #1C2A25;
+  border-radius: 14px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: -moz-fit-content;
+  height: fit-content;
+  position: sticky;
+  top: 70px;
+}
+.menu-side .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #A0A8A5;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+.menu-side .menu-item img {
+  width: 18px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.menu-side .menu-item h3 {
+  font-size: 13px;
+  font-weight: 500;
+  flex: 1;
+}
+.menu-side .menu-item:hover {
+  background: rgba(42, 99, 83, 0.3);
+  color: #E0E6E4;
+}
+.menu-side .menu-item:hover img {
+  opacity: 1;
+}
+.menu-side .menu-item.active {
+  background: #2A6353;
+  color: #E0E6E4;
+}
+.menu-side .menu-item.active img {
+  opacity: 1;
+}
+.menu-side .menu-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 20px;
+  background: #1e2e28;
+  color: #A0A8A5;
+  margin-left: auto;
+}
+.menu-side .menu-badge.alert {
+  background: rgba(231, 76, 60, 0.2);
+  color: #f08080;
+}
