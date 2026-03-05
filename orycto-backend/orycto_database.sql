@@ -1,23 +1,3 @@
--- ═══════════════════════════════════════════════════════════════════════
---  ORYCTO — Base de données v2
---  Rabbit Farm Management System
---  Compatible : PostgreSQL 14+
---  Mis à jour  : 2026
---
---  CORRECTIONS v2 :
---  - Dates mises à jour en 2026 (données cohérentes avec la date actuelle)
---  - v_alertes_stock expose aliment_id (requis par la route restock)
---  - v_indicateurs inclut nb_malades (utilisé par statistics.js)
---  - v_accouplements expose male_db_id et femelle_db_id
---  - stocks_aliment : contrainte UNIQUE sur aliment_id (1 stock par aliment)
---  - mise_bas : LIT-003 corrigée (ne référence plus ACC-001 en doublon)
---  - evenements : type 'deces' ajouté pour les graphiques statistiques
---  - DROP VIEWS avant DROP TABLES pour éviter les erreurs de dépendance
--- ═══════════════════════════════════════════════════════════════════════
-
--- ───────────────────────────────────────────────────────────────────────
---  NETTOYAGE (vues d'abord, puis tables dans l'ordre inverse)
--- ───────────────────────────────────────────────────────────────────────
 DROP VIEW IF EXISTS v_indicateurs;
 DROP VIEW IF EXISTS v_accouplements;
 DROP VIEW IF EXISTS v_alertes_stock;
@@ -38,9 +18,6 @@ DROP TABLE IF EXISTS races;
 DROP TABLE IF EXISTS utilisateurs;
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  1. UTILISATEURS
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE utilisateurs (
   id            SERIAL PRIMARY KEY,
   nom           VARCHAR(80)  NOT NULL,
@@ -57,9 +34,6 @@ INSERT INTO utilisateurs (nom, email, role, mot_de_passe) VALUES
   ('Jean Rakoto',  'jean@orycto.mg',   'worker',       '$2b$10$PLACEHOLDER_HASH');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  2. RACES
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE races (
   id            SERIAL PRIMARY KEY,
   nom           VARCHAR(60)  NOT NULL UNIQUE,
@@ -76,9 +50,6 @@ INSERT INTO races (nom, origine, poids_moyen, description) VALUES
   ('New Zealand',   'Etats-Unis', 4.50, 'Race a viande standard, rustique');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  3. CAGES
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE cages (
   id            SERIAL PRIMARY KEY,
   code          VARCHAR(10)  NOT NULL UNIQUE,
@@ -99,9 +70,6 @@ INSERT INTO cages (code, section, capacite_max, type_cage) VALUES
   ('C-04','C',1,'standard'), ('C-05','C',1,'standard');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  4. LAPINS
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE lapins (
   id             SERIAL PRIMARY KEY,
   tag            VARCHAR(20)  NOT NULL UNIQUE,
@@ -165,9 +133,6 @@ UPDATE lapins SET mere_id=(SELECT id FROM lapins WHERE tag='LP-2024-003'), pere_
 UPDATE lapins SET mere_id=(SELECT id FROM lapins WHERE tag='LP-2023-003'), pere_id=(SELECT id FROM lapins WHERE tag='LP-2023-008') WHERE tag='LP-2025-002';
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  5. PESEES
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE pesees (
   id          SERIAL PRIMARY KEY,
   lapin_id    INT          NOT NULL REFERENCES lapins(id) ON DELETE CASCADE,
@@ -188,9 +153,6 @@ INSERT INTO pesees (lapin_id, poids, date_pesee, notes) VALUES
   ((SELECT id FROM lapins WHERE tag='LP-2023-001'), 4.70, '2026-01-04', NULL);
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  6. ACCOUPLEMENTS
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE accouplements (
   id                    SERIAL PRIMARY KEY,
   code                  VARCHAR(15) NOT NULL UNIQUE,
@@ -240,9 +202,6 @@ INSERT INTO accouplements
     '2026-03-03','2026-04-03',NULL,'planifie',NULL);
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  7. MISE BAS
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE mise_bas (
   id              SERIAL PRIMARY KEY,
   code            VARCHAR(15) NOT NULL UNIQUE,
@@ -275,9 +234,6 @@ INSERT INTO mise_bas
     'Portee precedente ACC-001');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  8. SUIVIS SANTE
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE suivis_sante (
   id              SERIAL PRIMARY KEY,
   code            VARCHAR(15)  NOT NULL UNIQUE,
@@ -309,9 +265,6 @@ INSERT INTO suivis_sante
   ('TRT-010',(SELECT id FROM lapins WHERE tag='LP-2024-003'),'medicament',     'Metronidazole',   '2026-02-18','2026-02-28','en_cours',  'Troubles digestifs');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  9. PATHOLOGIES
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE pathologies (
   id              SERIAL PRIMARY KEY,
   code            VARCHAR(15) NOT NULL UNIQUE,
@@ -332,9 +285,6 @@ INSERT INTO pathologies
   ('PATH-005',(SELECT id FROM lapins WHERE tag='LP-2023-007'),'E. cuniculi',           '2026-01-15','gueri',   'leger', 'Resolu avec traitement');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  10. ALIMENTS
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE aliments (
   id             SERIAL PRIMARY KEY,
   code           VARCHAR(15)   NOT NULL UNIQUE,
@@ -354,10 +304,6 @@ INSERT INTO aliments (code, nom, type_aliment, unite, cout_unitaire) VALUES
   ('ALM-006','Mix vitamines','complement', 'g',  8000);
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  11. STOCKS ALIMENT
---  UNIQUE sur aliment_id : 1 ligne de stock par aliment
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE stocks_aliment (
   id              SERIAL PRIMARY KEY,
   aliment_id      INT           NOT NULL UNIQUE REFERENCES aliments(id),
@@ -378,9 +324,6 @@ INSERT INTO stocks_aliment
   ((SELECT id FROM aliments WHERE code='ALM-006'), 350, 100, 500, '2026-08-01');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  12. DISTRIBUTIONS ALIMENT
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE distributions_aliment (
   id          SERIAL PRIMARY KEY,
   code        VARCHAR(15)  NOT NULL UNIQUE,
@@ -418,9 +361,6 @@ INSERT INTO distributions_aliment
   ('DST-008','2026-03-03',(SELECT id FROM aliments WHERE code='ALM-005'),NULL,NULL,0.5,NULL);
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  13. EVENEMENTS
--- ═══════════════════════════════════════════════════════════════════════
 CREATE TABLE evenements (
   id           SERIAL PRIMARY KEY,
   type_event   VARCHAR(30)   NOT NULL,
@@ -493,9 +433,6 @@ INSERT INTO evenements
     NULL,NULL,'2025-12-20 09:00:00');
 
 
--- ═══════════════════════════════════════════════════════════════════════
---  VUES
--- ═══════════════════════════════════════════════════════════════════════
 
 -- Vue lapins : expose race_id et cage_id pour les updates
 CREATE OR REPLACE VIEW v_lapins AS
@@ -591,8 +528,3 @@ CREATE OR REPLACE VIEW v_indicateurs AS
     (SELECT COUNT(*) FROM suivis_sante WHERE statut = 'en_retard')                  AS vaccins_en_retard,
     (SELECT COUNT(*) FROM suivis_sante WHERE statut = 'en_cours')                   AS traitements_en_cours,
     (SELECT COUNT(*) FROM stocks_aliment s WHERE s.quantite <= s.seuil_alerte)      AS stocks_alertes;
-
-
--- ═══════════════════════════════════════════════════════════════════════
---  FIN DU SCRIPT
--- ═══════════════════════════════════════════════════════════════════════
