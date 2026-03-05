@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orycto — Sign In</title>
+  <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1510;
+      --surface:    #121B18;
+      --card:       #1C2A25;
+      --border:     #1e2e28;
+      --border-lt:  #2A6353;
+      --text:       #E0E6E4;
+      --muted:      #A0A8A5;
+      --green:      #3a8a72;
+      --green-lt:   #4ade80;
+      --gold:       #D4B475;
+      --red:        #E74C3C;
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: auto;
+    }
+
+    /* ── ANIMATED BACKGROUND ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Dot grid */
+    .bg-layer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, #1e2e28 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.6;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.18;
+      animation: drift linear infinite;
+    }
+    .blob-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #2A6353, transparent 70%);
+      top: -200px; left: -150px;
+      animation-duration: 22s;
+    }
+    .blob-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #D4B475, transparent 70%);
+      bottom: -150px; right: -100px;
+      animation-duration: 28s;
+      animation-direction: reverse;
+    }
+    .blob-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, #3a8a72, transparent 70%);
+      top: 40%; right: 30%;
+      animation-duration: 18s;
+    }
+
+    @keyframes drift {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      33%  { transform: translate(30px, -20px) rotate(120deg); }
+      66%  { transform: translate(-20px, 30px) rotate(240deg); }
+      100% { transform: translate(0, 0) rotate(360deg); }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      min-height: 100vh;
+    }
+
+    .left-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 56px;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .brand-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: 1px;
+    }
+    .brand-name span {
+      color: var(--green-lt);
+    }
+
+    .hero-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 500px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green-lt);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.2s forwards;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--green-lt);
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(36px, 3.5vw, 52px);
+      font-weight: 800;
+      line-height: 1.08;
+      color: var(--text);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.35s forwards;
+    }
+    .hero-title .hl {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--green-lt);
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 420px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.5s forwards;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 48px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.65s forwards;
+    }
+    .h-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .h-stat-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--green-lt);
+    }
+    .h-stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+    .h-stat-sep {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+      margin: 4px 0;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 32px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.8s forwards;
+    }
+    .feat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--border-lt);
+      border-radius: 20px;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(42,99,83,.1);
+      transition: all 0.2s;
+    }
+    .feat-pill:hover {
+      border-color: var(--green-lt);
+      color: var(--green-lt);
+    }
+
+    .left-footer {
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeIn 0.7s ease 1s forwards;
+    }
+    .left-footer a { color: var(--green); text-decoration: none; }
+
+    .right-panel {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 24px;
+      border-left: 1px solid var(--border);
+      background: linear-gradient(160deg, rgba(28,42,37,.95), rgba(18,27,24,.98));
+      overflow-y: auto;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 400px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.15s forwards;
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 2px;
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 32px;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .auth-tab.active {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+
+    .form-head {
+      margin-bottom: 28px;
+    }
+    .form-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .form-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.3px;
+    }
+    .form-group label .req { color: var(--gold); }
+
+    .input-wrap {
+      position: relative;
+    }
+    .input-wrap .input-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      pointer-events: none;
+    }
+    .input-wrap input {
+      width: 100%;
+      height: 44px;
+      background: var(--surface);
+      border: 1px solid var(--border-lt);
+      border-radius: 10px;
+      padding: 0 44px 0 40px;
+      color: var(--text);
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .input-wrap input::placeholder { color: var(--muted); }
+    .input-wrap input:focus {
+      border-color: var(--gold);
+      background: rgba(18,27,24,.8);
+      box-shadow: 0 0 0 3px rgba(212,180,117,.08);
+    }
+    .input-wrap input.error {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(231,76,60,.08);
+    }
+    .input-wrap input.valid {
+      border-color: var(--green);
+    }
+    .toggle-pass {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .toggle-pass:hover { color: var(--text); }
+
+    .field-error {
+      font-size: 11px;
+      color: var(--red);
+      display: none;
+    }
+    .field-error.show { display: block; }
+
+    .name-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .pass-strength {
+      margin-top: 6px;
+      display: none;
+    }
+    .pass-strength.show { display: block; }
+    .strength-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 4px;
+    }
+    .strength-seg {
+      flex: 1;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+    .strength-label {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .form-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .checkbox-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .checkbox-wrap input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+    .forgot-link {
+      font-size: 12px;
+      color: var(--gold);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .forgot-link:hover { opacity: 0.75; }
+
+    .terms-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .terms-wrap input[type="checkbox"] {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+    .terms-wrap a { color: var(--gold); text-decoration: none; }
+
+    .btn-submit {
+      width: 100%;
+      height: 46px;
+      background: linear-gradient(135deg, #2A6353, #3a8a72);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(255,255,255,.1));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .btn-submit:hover::before { opacity: 1; }
+    .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(42,99,83,.4); }
+    .btn-submit:active { transform: scale(0.98); }
+    .btn-submit.loading {
+      pointer-events: none;
+      opacity: 0.8;
+    }
+    .btn-submit .spinner {
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .btn-submit.loading .spinner { display: block; }
+    .btn-submit.loading .btn-text { display: none; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .social-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .btn-social {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 40px;
+      background: var(--surface);
+      border: 1px solid var(--border-lt);
+      border-radius: 9px;
+      color: var(--muted);
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-social:hover {
+      border-color: var(--text);
+      color: var(--text);
+      background: rgba(224,230,228,.04);
+    }
+
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 16px;
+      padding: 20px;
+    }
+    .success-overlay.show { display: flex; }
+    .success-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: rgba(42,99,83,.2);
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .success-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .success-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .panel-enter {
+      animation: fadeUp 0.3s ease forwards;
+    }
+
+    @media (max-width: 900px) {
+      .wrapper { grid-template-columns: 1fr; }
+      .left-panel { display: none; }
+      .right-panel {
+        border-left: none;
+        background: var(--bg);
+        min-height: 100vh;
+        align-items: center;
+        padding: 32px 20px;
+      }
+    }
+
+    @media (max-height: 700px) {
+      .right-panel {
+        align-items: flex-start;
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-lt); border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<div class="bg-layer">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="wrapper">
+
+  <div class="left-panel">
+    <div class="brand">
+      <img src="./assets/img/orycto.png" alt="Orycto" class="brand-logo">
+      <span class="brand-name">ORY<span>CTO</span></span>
+    </div>
+
+    <div class="hero-text">
+      <div class="hero-tag">Rabbit Farm Management</div>
+      <h1 class="hero-title">
+        Your herd,<br>
+        <span class="hl">perfectly</span><br>
+        managed.
+      </h1>
+      <p class="hero-desc">
+        Track every rabbit, monitor health, manage breeding cycles, and optimise your farm's performance — all in one place.
+      </p>
+
+      <div class="hero-stats">
+        <div class="h-stat">
+          <span class="h-stat-value">38</span>
+          <span class="h-stat-label">Active rabbits</span>
+        </div>
+        <div class="h-stat-sep"></div>
+        <div class="h-stat">
+          <span class="h-stat-value">85%</span>
+          <span class="h-stat-label">Birth rate</span>
+        </div>
+        <div class="h-stat-sep"></div>
+        <div class="h-stat">
+          <span class="h-stat-value">6.2</span>
+          <span class="h-stat-label">Avg. litter size</span>
+        </div>
+      </div>
+
+      <div class="features">
+        <span class="feat-pill">🐇 Herd tracking</span>
+        <span class="feat-pill">💞 Breeding cycles</span>
+        <span class="feat-pill">🏥 Health records</span>
+        <span class="feat-pill">🌾 Feed management</span>
+        <span class="feat-pill">📊 Analytics</span>
+        <span class="feat-pill">🚨 Smart alerts</span>
+      </div>
+    </div>
+
+    <div class="left-footer">
+      © 2025 Orycto &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="auth-card">
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+        <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Create Account</button>
+      </div>
+
+      <div id="form-login">
+        <div class="form-head">
+          <div class="form-title">Welcome back 👋</div>
+          <div class="form-subtitle">Sign in to your Orycto account</div>
+        </div>
+
+        <div class="form-group">
+          <label>Email address <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="login-email" placeholder="admin@orycto.mg" autocomplete="email">
+          </div>
+          <span class="field-error" id="err-login-email">Please enter a valid email.</span>
+        </div>
+
+        <div class="form-group">
+          <label>Password <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+            <button class="toggle-pass" onclick="togglePass('login-pass', this)" type="button">👁</button>
+          </div>
+          <span class="field-error" id="err-login-pass">Password is required.</span>
+        </div>
+
+        <div class="form-meta">
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="remember-me">
+            Remember me
+          </label>
+          <a href="#" class="forgot-link" onclick="showForgot()">Forgot password?</a>
+        </div>
+
+        <button class="btn-submit" id="btn-login" onclick="handleLogin()">
+          <div class="spinner"></div>
+          <span class="btn-text">Sign In →</span>
+        </button>
+
+        <div class="divider">or continue with</div>
+
+        <div class="social-row">
+          <button class="btn-social" onclick="socialLogin('Google')">
+            <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Google
+          </button>
+          <button class="btn-social" onclick="socialLogin('GitHub')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </button>
+        </div>
+
+        <div class="success-overlay" id="success-login">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Welcome back!</div>
+          <div class="success-desc">Redirecting to your dashboard…</div>
+        </div>
+      </div>
+
+      <div id="form-register" style="display:none">
+        <div class="form-head">
+          <div class="form-title">Create account 🐇</div>
+          <div class="form-subtitle">Start managing your farm today</div>
+        </div>
+
+        <div class="name-row">
+          <div class="form-group">
+            <label>First name <span class="req">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text" id="reg-first" placeholder="Jean">
+            </div>
+            <span class="field-error" id="err-reg-first">First name is required.</span>
+          </div>
+          <div class="form-group">
+            <label>Last name <span class="req">*</span></label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text" id="reg-last" placeholder="Dupont">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email address <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">✉️</span>
+            <input type="email" id="reg-email" placeholder="you@example.com">
+          </div>
+          <span class="field-error" id="err-reg-email">Please enter a valid email.</span>
+        </div>
+
+        <div class="form-group">
+          <label>Role</label>
+          <div class="input-wrap">
+            <span class="input-icon">🏷</span>
+            <input type="text" id="reg-role" placeholder="Farm Owner, Veterinarian, Worker…" style="padding-left:40px">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Password <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-pass" placeholder="Min. 8 characters" oninput="checkStrength(this.value)">
+            <button class="toggle-pass" onclick="togglePass('reg-pass', this)" type="button">👁</button>
+          </div>
+          <div class="pass-strength" id="pass-strength">
+            <div class="strength-bar">
+              <div class="strength-seg" id="seg1"></div>
+              <div class="strength-seg" id="seg2"></div>
+              <div class="strength-seg" id="seg3"></div>
+              <div class="strength-seg" id="seg4"></div>
+            </div>
+            <span class="strength-label" id="strength-label">Strength: —</span>
+          </div>
+          <span class="field-error" id="err-reg-pass">Password must be at least 8 characters.</span>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm password <span class="req">*</span></label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password" id="reg-confirm" placeholder="Repeat password">
+            <button class="toggle-pass" onclick="togglePass('reg-confirm', this)" type="button">👁</button>
+          </div>
+          <span class="field-error" id="err-reg-confirm">Passwords do not match.</span>
+        </div>
+
+        <div class="terms-wrap">
+          <input type="checkbox" id="accept-terms">
+          <label for="accept-terms">
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button class="btn-submit" id="btn-register" onclick="handleRegister()">
+          <div class="spinner"></div>
+          <span class="btn-text">Create Account →</span>
+        </button>
+
+        <div class="success-overlay" id="success-register">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Account created!</div>
+          <div class="success-desc">Welcome to Orycto. Taking you to your dashboard…</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function switchTab(tab) {
+    const isLogin = tab === 'login';
+    document.getElementById('tab-login').classList.toggle('active', isLogin);
+    document.getElementById('tab-register').classList.toggle('active', !isLogin);
+    document.getElementById('form-login').style.display = isLogin ? '' : 'none';
+    document.getElementById('form-register').style.display = isLogin ? 'none' : '';
+
+    const form = document.getElementById('form-' + tab);
+    form.classList.remove('panel-enter');
+    void form.offsetWidth; 
+    form.classList.add('panel-enter');
+  }
+
+  function togglePass(inputId, btn) {
+    const inp = document.getElementById(inputId);
+    if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+    else { inp.type = 'password'; btn.textContent = '👁'; }
+  }
+
+  function checkStrength(val) {
+    const el = document.getElementById('pass-strength');
+    const label = document.getElementById('strength-label');
+    const segs = [1,2,3,4].map(i => document.getElementById('seg'+i));
+
+    el.classList.toggle('show', val.length > 0);
+    if (!val) return;
+
+    let score = 0;
+    if (val.length >= 8)  score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const colors = ['#E74C3C','#E74C3C','#D4B475','#3a8a72','#4ade80'];
+    const labels = ['','Weak','Fair','Good','Strong'];
+
+    segs.forEach((s, i) => {
+      s.style.background = i < score ? colors[score] : 'var(--border)';
+    });
+    label.textContent = 'Strength: ' + (labels[score] || '—');
+    label.style.color = colors[score];
+  }
+
+  function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+  function setError(id, show) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('show', show);
+  }
+  function setInputState(id, state) {
+    const inp = document.getElementById(id);
+    if (!inp) return;
+    inp.classList.remove('error','valid');
+    if (state) inp.classList.add(state);
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-pass').value;
+    let valid = true;
+
+    const emailOk = isValidEmail(email);
+    setError('err-login-email', !emailOk);
+    setInputState('login-email', emailOk ? 'valid' : 'error');
+    if (!emailOk) valid = false;
+
+    const passOk = pass.length >= 1;
+    setError('err-login-pass', !passOk);
+    setInputState('login-pass', passOk ? 'valid' : 'error');
+    if (!passOk) valid = false;
+
+    if (!valid) return;
+
+    const btn = document.getElementById('btn-login');
+    btn.classList.add('loading');
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      document.querySelector('#form-login .form-head').style.display = 'none';
+      document.querySelector('#form-login .form-group:nth-child(2)').style.display = 'none';
+      document.querySelector('#form-login .form-group:nth-child(3)').style.display = 'none';
+      document.querySelector('.form-meta').style.display = 'none';
+      btn.style.display = 'none';
+      document.querySelector('.divider').style.display = 'none';
+      document.querySelector('.social-row').style.display = 'none';
+      document.getElementById('success-login').classList.add('show');
+
+      setTimeout(() => { window.location.href = './index.html'; }, 1800);
+    }, 1400);
+  }
+
+  function handleRegister() {
+    const first   = document.getElementById('reg-first').value.trim();
+    const email   = document.getElementById('reg-email').value.trim();
+    const pass    = document.getElementById('reg-pass').value;
+    const confirm = document.getElementById('reg-confirm').value;
+    const terms   = document.getElementById('accept-terms').checked;
+    let valid = true;
+
+    const firstOk = first.length >= 1;
+    setError('err-reg-first', !firstOk);
+    setInputState('reg-first', firstOk ? 'valid' : 'error');
+    if (!firstOk) valid = false;
+
+    const emailOk = isValidEmail(email);
+    setError('err-reg-email', !emailOk);
+    setInputState('reg-email', emailOk ? 'valid' : 'error');
+    if (!emailOk) valid = false;
+
+    const passOk = pass.length >= 8;
+    setError('err-reg-pass', !passOk);
+    setInputState('reg-pass', passOk ? 'valid' : 'error');
+    if (!passOk) valid = false;
+
+    const confirmOk = pass === confirm && confirm.length > 0;
+    setError('err-reg-confirm', !confirmOk);
+    setInputState('reg-confirm', confirmOk ? 'valid' : 'error');
+    if (!confirmOk) valid = false;
+
+    if (!terms) { alert('Please accept the Terms of Service to continue.'); return; }
+    if (!valid) return;
+
+    const btn = document.getElementById('btn-register');
+    btn.classList.add('loading');
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      document.querySelector('#form-register .form-head').style.display = 'none';
+      document.querySelectorAll('#form-register .form-group, #form-register .name-row, #form-register .terms-wrap').forEach(el => el.style.display = 'none');
+      btn.style.display = 'none';
+      document.getElementById('success-register').classList.add('show');
+
+      setTimeout(() => { window.location.href = './index.html'; }, 1800);
+    }, 1600);
+  }
+
+  function showForgot() {
+    const email = document.getElementById('login-email').value.trim();
+    const msg = email
+      ? `A reset link will be sent to:\n${email}`
+      : 'Enter your email address first, then click "Forgot password?" again.';
+    if (email) {
+      alert('✅ ' + msg + '\n\n(This is a demo — no email sent)');
+    } else {
+      alert('ℹ️ ' + msg);
+      document.getElementById('login-email').focus();
+    }
+  }
+
+  function socialLogin(provider) {
+    alert(`${provider} login coming soon!\n\nFor demo, use the email form.`);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      if (document.getElementById('form-login').style.display !== 'none') handleLogin();
+      else handleRegister();
+    }
+  });
+
+  document.getElementById('login-email').addEventListener('blur', function() {
+    if (this.value) {
+      const ok = isValidEmail(this.value);
+      setInputState('login-email', ok ? 'valid' : 'error');
+      setError('err-login-email', !ok);
+    }
+  });
+  document.getElementById('reg-email').addEventListener('blur', function() {
+    if (this.value) {
+      const ok = isValidEmail(this.value);
+      setInputState('reg-email', ok ? 'valid' : 'error');
+      setError('err-reg-email', !ok);
+    }
+  });
+  document.getElementById('reg-confirm').addEventListener('input', function() {
+    const pass = document.getElementById('reg-pass').value;
+    if (this.value) {
+      const ok = this.value === pass;
+      setInputState('reg-confirm', ok ? 'valid' : 'error');
+      setError('err-reg-confirm', !ok);
+    }
+  });
+</script>
+</body>
+</html>
